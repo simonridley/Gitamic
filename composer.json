@@ -1,0 +1,40 @@
+{
+    "name": "simonhamp/gitamic",
+    "description": "A beautiful Git interface for your Statamic CP",
+    "type": "statamic-addon",
+    "authors": [
+        {
+            "name": "Simon Hamp",
+            "email": "simon.hamp@me.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SimonHamp\\Gitamic\\": "src/"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Gitamic",
+            "description": "A beautiful Git interface for your Statamic CP"
+        },
+        "laravel": {
+            "providers": [
+                "SimonHamp\\Gitamic\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "gitonomy/gitlib": "^1.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "nunomaduro/collision": "^5.0",
+        "pestphp/pest": "^0.1.5"
+    },
+    "support": {
+        "email": "support@statamic.com"
+    }
+}
