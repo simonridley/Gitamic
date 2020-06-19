@@ -2,6 +2,7 @@
 
 namespace SimonHamp\Gitamic;
 
+use SimonHamp\Gitamic\Contracts\SiteRepository;
 use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider
@@ -13,4 +14,11 @@ class ServiceProvider extends AddonServiceProvider
     protected $routes = [
         'cp' => __DIR__.'/../routes/cp.php',
     ];
+
+    public function register()
+    {
+        app()->singleton(SiteRepository::class, function () {
+            return new Repository(base_path());
+        });
+    }
 }
