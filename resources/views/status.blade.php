@@ -1,6 +1,6 @@
 @extends('statamic::layout')
 @section('title', __('Gitamic'))
-@section('wrapper_class', 'max-w-full')
+{{--@section('wrapper_class', 'max-w-full')--}}
 
 @section('content')
 

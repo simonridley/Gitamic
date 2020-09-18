@@ -2,7 +2,6 @@
 
 namespace SimonHamp\Gitamic\Http\Controllers;
 
-use Barryvdh\Debugbar\Facade as Debugbar;
 use SimonHamp\Gitamic\Contracts\SiteRepository;
 
 class GitamicApiController
@@ -17,12 +16,16 @@ class GitamicApiController
             'staged_count' => $staged->count(),
         ];
 
-        return json_encode(['untracked' => $untracked->all(), 'staged' => $staged->all(), 'meta' => $meta]);
+        return response()->json([
+            'untracked' => $untracked->all(),
+            'staged' => $staged->all(),
+            'meta' => $meta
+        ]);
     }
 
     public function actions($type)
     {
-        return json_encode([
+        return response()->json([
             [
                 'title' => 'Add to Git',
                 'handle' => 'gitadd',
