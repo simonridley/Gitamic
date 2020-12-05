@@ -1,8 +1,8 @@
 <template>
     <div>
-        <data-list :visibleColumns="columns" :columns="columns" :rows="rows" sortColumn="path" sortDirection="asc">
+        <data-list ref="list" :visibleColumns="columns" :columns="columns" :rows="rows" sortColumn="path" sortDirection="asc">
             <div class="card p-0 relative" slot-scope="{ filteredRows: rows }">
-                <data-list-bulk-actions url="api/actions/staged" />
+                <data-list-bulk-actions url="api/actions/staged" @completed="refresh" />
 
                 <data-list-table :rows="rows" allow-bulk-actions="true">
                     <template slot="cell-relative_path" slot-scope="{ row: file }">
@@ -47,12 +47,19 @@
         },
 
         watch: {
+            data(newValue, oldValue) {
+                this.rows = newValue;
+            }
         },
 
         created() {
         },
 
         methods: {
+            refresh() {
+                this.$refs.list.clearSelections();
+                this.$root.$refs.status.getStatus();
+            }
         }
     }
 </script>

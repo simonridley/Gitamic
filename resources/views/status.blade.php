@@ -6,7 +6,7 @@
 
     <div class="flex mb-3">
         <h1 class="flex-1">{{ __('Gitamic') }}</h1>
-        <a href="" class="btn" @click.prevent="this.$refs.status.getStatus">{{ __('Refresh') }}</a>
+        <button class="btn" @click.prevent="Statamic.$app.$refs.status.getStatus">{{ __('Refresh') }}</button>
     </div>
 
     <gitamic-status ref="status"></gitamic-status>

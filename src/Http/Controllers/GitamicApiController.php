@@ -8,16 +8,16 @@ class GitamicApiController
 {
     public function status(SiteRepository $git)
     {
-        $untracked = $git->getUntrackedFiles();
+        $unstaged = $git->getUnstagedFiles();
         $staged = $git->getStagedFiles();
 
         $meta = [
-            'untracked_count' => $untracked->count(),
+            'unstaged_count' => $unstaged->count(),
             'staged_count' => $staged->count(),
         ];
 
         return response()->json([
-            'untracked' => $untracked->all(),
+            'unstaged' => $unstaged->all(),
             'staged' => $staged->all(),
             'meta' => $meta
         ]);
@@ -25,21 +25,49 @@ class GitamicApiController
 
     public function actions($type)
     {
-        return response()->json([
-            [
-                'title' => 'Add to Git',
-                'handle' => 'gitadd',
-                'buttonText' => 'Add to Git',
-                'description' => 'Are you sure?',
-                'fields' => ['path'],
-            ],
-            [
-                'title' => 'Gitignore',
-                'handle' => 'gitignore',
-                'buttonText' => 'Add to .gitignore file',
-                'description' => 'Are you sure?',
-                'fields' => ['path'],
-            ]
-        ]);
+        switch ($type)
+        {
+            case 'unstaged':
+                return response()->json([
+                    [
+                        'title' => 'Stage',
+                        'handle' => 'add',
+                        'buttonText' => 'Stage',
+                        'description' => 'Are you sure?',
+                        'fields' => ['path'],
+                    ],
+                    [
+                        'title' => 'Ignore',
+                        'handle' => 'ignore',
+                        'buttonText' => 'Add to .gitignore file',
+                        'description' => 'Are you sure?',
+                        'fields' => ['path'],
+                    ],
+                ]);
+            case 'staged':
+                return response()->json([
+                    [
+                        'title' => 'Unstage',
+                        'handle' => 'remove',
+                        'buttonText' => 'Unstage',
+                        'description' => 'Are you sure?',
+                        'fields' => ['path'],
+                    ],
+                ]);
+        }
+    }
+
+    public function doAction(SiteRepository $git, $type)
+    {
+        $action = request()->input('action');
+        $selections = request()->input('selections');
+
+        $files = $git->getFilesOfType($type)->only($selections)->map(function ($file) {
+            return $file->get('path');
+        });
+
+        $output = $git->$action($files->all());
+
+        return response()->json(['action' => 'getStatus']);
     }
 }

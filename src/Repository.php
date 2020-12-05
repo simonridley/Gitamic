@@ -21,6 +21,18 @@ class Repository implements Contracts\SiteRepository
         $this->repo = new GitRepository(base_path());
     }
 
+    public function getFilesOfType($type): Collection
+    {
+        $method = Str::camel("get_{$type}_files");
+
+        return $this->$method();
+    }
+
+    public function getUnstagedFiles(): Collection
+    {
+        return $this->getUntrackedFiles()->merge($this->getPendingFiles())->keyBy('id');
+    }
+
     public function getUntrackedFiles(): Collection
     {
         return collect($this->repo->getWorkingCopy()->getUntrackedFiles())
@@ -33,11 +45,31 @@ class Repository implements Contracts\SiteRepository
     {
         return collect($this->repo->getWorkingCopy()->getDiffStaged()->getFiles())
             ->transform(function (GitFile $file, $id) {
-                return $this->getFileDetails($file->getNewName(), $id);
+                return $this->getFileDetails($file->getName(), $id);
             });
     }
 
-    protected function getFileDetails($relative_path, $id)
+    public function getPendingFiles(): Collection
+    {
+        return collect($this->repo->getWorkingCopy()->getDiffPending()->getFiles())
+            ->transform(function (GitFile $file, $id) {
+                return $this->getFileDetails($file->getName(), $id);
+            });
+    }
+
+    public function add($files, $args = [])
+    {
+        $args = $files + $args;
+        return $this->repo->run('add', $args);
+    }
+
+    public function remove($files, $args = [])
+    {
+        $args = $files + $args + ['--cached'];
+        return $this->repo->run('rm', $args);
+    }
+
+    protected function getFileDetails($relative_path, $id): Collection
     {
         $path = base_path($relative_path);
         $extension = '.' . File::extension($path);
@@ -62,6 +94,8 @@ class Repository implements Contracts\SiteRepository
             // Something went wrong, so it's not an entry
         }
 
-        return compact('id', 'relative_path', 'path', 'last_modified', 'type', 'size', 'is_content', 'edit_url');
+        return collect(compact(
+            'id', 'relative_path', 'path', 'last_modified', 'type', 'size', 'is_content', 'is_entry', 'edit_url'
+        ));
     }
 }

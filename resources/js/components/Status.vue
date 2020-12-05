@@ -11,9 +11,10 @@
             <gitamic-staged ref="staged" :data="staged"></gitamic-staged>
 
             <div class="flex my-3">
-                <h2>Untracked</h2>
+                <h2>Unstaged</h2>
             </div>
-            <gitamic-untracked ref="untracked" :data="untracked"></gitamic-untracked>
+            <gitamic-unstaged ref="unstaged" :data="unstaged"></gitamic-unstaged>
+
         </div>
     </div>
 </template>
@@ -27,7 +28,7 @@
         data() {
             return {
                 loaded: false,
-                untracked: [],
+                unstaged: [],
                 staged: [],
                 meta: {},
             }
@@ -46,14 +47,13 @@
         },
 
         methods: {
-            getStatus() {
-                this.$axios.get(cp_url(`gitamic/api/status`))
-                    .then(response => {
-                        this.loaded = true;
-                        this.untracked = response.data.untracked;
-                        this.staged = response.data.staged;
-                        this.meta = response.data.meta;
-                    });
+            async getStatus() {
+                let response = await this.$axios.get(cp_url(`gitamic/api/status`))
+
+                this.loaded = true;
+                this.unstaged = response.data.unstaged;
+                this.staged = response.data.staged;
+                this.meta = response.data.meta;
             },
         }
     }
