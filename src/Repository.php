@@ -57,15 +57,21 @@ class Repository implements Contracts\SiteRepository
             });
     }
 
-    public function add($files, $args = [])
+    public function stage($files, $args = [])
     {
-        $args = $files + $args;
+        $args = array_merge(array_values($files), array_values($args));
         return $this->repo->run('add', $args);
+    }
+
+    public function unstage($files, $args = [])
+    {
+        $args = array_merge(array_values($files), array_values($args), ['--staged']);
+        return $this->repo->run('restore', $args);
     }
 
     public function remove($files, $args = [])
     {
-        $args = $files + $args + ['--cached'];
+        $args = array_merge(array_values($files), array_values($args), []);
         return $this->repo->run('rm', $args);
     }
 

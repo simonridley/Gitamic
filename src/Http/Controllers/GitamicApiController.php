@@ -31,7 +31,7 @@ class GitamicApiController
                 return response()->json([
                     [
                         'title' => 'Stage',
-                        'handle' => 'add',
+                        'handle' => 'stage',
                         'buttonText' => 'Stage',
                         'description' => 'Are you sure?',
                         'fields' => ['path'],
@@ -44,11 +44,12 @@ class GitamicApiController
                         'fields' => ['path'],
                     ],
                 ]);
+
             case 'staged':
                 return response()->json([
                     [
                         'title' => 'Unstage',
-                        'handle' => 'remove',
+                        'handle' => 'unstage',
                         'buttonText' => 'Unstage',
                         'description' => 'Are you sure?',
                         'fields' => ['path'],
@@ -66,7 +67,7 @@ class GitamicApiController
             return $file->get('path');
         });
 
-        $output = $git->$action($files->all());
+        $git->$action($files->all());
 
         return response()->json(['action' => 'getStatus']);
     }
