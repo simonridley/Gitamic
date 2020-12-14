@@ -46,6 +46,9 @@
         },
 
         computed: {
+            hasStagedChanges() {
+                return this.staged.length > 0;
+            }
         },
 
         watch: {
