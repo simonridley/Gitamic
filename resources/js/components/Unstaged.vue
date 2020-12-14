@@ -10,9 +10,9 @@
                     </template>
                     <template slot="actions" slot-scope="{ row: file, index }">
                         <dropdown-list>
-                            <dropdown-item :text="__('Stage')" />
-                            <dropdown-item :text="__('Stash')" />
-                            <dropdown-item :text="__('Ignore')" />
+                            <dropdown-item :text="__('Stage')"
+                                           key="git.stage"
+                                           @click="stage(file)" />
                             <div class="divider"></div>
                             <dropdown-item :text="__('Delete')" class="warning" />
 <!--                            /**@click="destroy(container, index)"**/-->
@@ -64,7 +64,16 @@
             refresh() {
                 this.$refs.list.clearSelections();
                 this.$root.$refs.status.getStatus();
-            }
+            },
+            stage(file) {
+                let payload = {
+                    selections: [file.id],
+                    action: 'stage',
+                };
+                this.$axios.post('api/actions/unstaged', payload, { responseType: 'blob' }).then(response => {
+                    this.refresh();
+                });
+            },
         }
     }
 </script>
