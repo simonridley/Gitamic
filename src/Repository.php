@@ -84,7 +84,7 @@ class Repository implements Contracts\SiteRepository
         $size = File::size($path);
         $is_content = Str::startsWith($path, app('filesystems.paths.content'));
         $entry_path = Str::replaceFirst('content' . DIRECTORY_SEPARATOR, '', $relative_path);
-        $collection = explode(DIRECTORY_SEPARATOR, $entry_path)[1];
+        $collection = explode(DIRECTORY_SEPARATOR, $entry_path)[1] ?? null;
         $edit_url = DIRECTORY_SEPARATOR
             . config('statamic.cp.route')
             . DIRECTORY_SEPARATOR
