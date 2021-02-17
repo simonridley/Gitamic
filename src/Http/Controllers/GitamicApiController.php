@@ -2,6 +2,7 @@
 
 namespace SimonHamp\Gitamic\Http\Controllers;
 
+use Illuminate\Http\Request;
 use SimonHamp\Gitamic\Contracts\SiteRepository;
 
 class GitamicApiController
@@ -70,5 +71,12 @@ class GitamicApiController
         $git->$action($files->all());
 
         return response()->json(['action' => 'getStatus']);
+    }
+
+    public function commit(SiteRepository $git)
+    {
+        $result = $git->commit(request()->input('commit_message'));
+
+        return response()->json(['result' => $result]);
     }
 }

@@ -1,12 +1,27 @@
 <template>
     <div>
+        <confirmation-modal
+            v-if="confirming"
+            title="Commit staged changes"
+            buttonText="Commit"
+            @confirm="doCommit"
+            @cancel="cancelCommit">
+            <p>Are you sure you want to commit these changes?</p>
+            <ul class="m-2 list-inside">
+                <li v-for="file in staged" class="list-disc">{{ file.relative_path }}</li>
+            </ul>
+
+            <label for="commit_message">Enter a commit message</label>
+            <textarea v-model="commit_message" class="w-full border rounded font-mono p-2 h-48" id="commit_message"></textarea>
+        </confirmation-modal>
+
         <div class="flex mb-3">
             <h1 class="flex-1">{{ __('Gitamic') }}</h1>
             <button class="btn" @click.prevent="getStatus">{{ __('Refresh') }}</button>
             <button
                 v-if="hasStagedChanges"
                 class="ml-2 btn-primary flex items-center"
-                @click="commit">
+                @click="confirmCommit">
                 <span>{{ __('Commit') }}</span>
             </button>
         </div>
@@ -39,9 +54,11 @@
         data() {
             return {
                 loaded: false,
+                confirming: false,
                 unstaged: [],
                 staged: [],
                 meta: {},
+                commit_message: '',
             }
         },
 
@@ -62,12 +79,29 @@
 
         methods: {
             async getStatus() {
-                let response = await this.$axios.get(cp_url(`gitamic/api/status`))
+                let response = await this.$axios.get(cp_url(`gitamic/api/status`));
 
                 this.loaded = true;
                 this.unstaged = response.data.unstaged;
                 this.staged = response.data.staged;
                 this.meta = response.data.meta;
+            },
+
+            confirmCommit() {
+                this.confirming = true;
+            },
+
+            cancelCommit() {
+                this.confirming = false;
+            },
+
+            async doCommit() {
+                let response = await this.$axios.post(cp_url(`gitamic/api/commit`), {
+                    commit_message: this.commit_message
+                });
+                this.getStatus();
+                this.confirming = false;
+                this.commit_message = '';
             },
         }
     }
