@@ -1,6 +1,6 @@
 # Gitamic
 Gitamic adds an interactive git UI to Statamic so that you can have more control over your commits. It's great for more
-complex sites that rely on live-publishing changes from your Statamic CP back to your git repository
+complex sites that rely on live-publishing changes from your Statamic CP back to your git repository.
 
 ## Setup
 Once Gitamic is installed you can use it immediately. It relies on wherever your site is running to contain a git
