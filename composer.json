@@ -16,7 +16,8 @@
     "extra": {
         "statamic": {
             "name": "Gitamic",
-            "description": "A beautiful Git interface in Statamic"
+            "description": "A beautiful Git interface in Statamic",
+            "editions": ["basic", "pro"]
         },
         "laravel": {
             "providers": [
