@@ -74,6 +74,11 @@ class Repository implements Contracts\SiteRepository
         return $this->repo->run('rm', $args);
     }
 
+    public function commit($message)
+    {
+        return $this->repo->run('commit', ['-m ' . addslashes($message)]);
+    }
+
     protected function getFileDetails($relative_path, $id): Collection
     {
         $path = base_path($relative_path);
