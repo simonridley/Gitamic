@@ -3,6 +3,9 @@ Gitamic adds an interactive git UI to Statamic so that you can have more control
 complex sites that rely on live-publishing changes from your Statamic CP back to your git repository.
 
 ## Setup
+Gitamic is only available as a purchasable add-on, so it cannot be installed via Composer. You may purchase from the
+[Statamic Marketplace](https://statamic.com/addons/simonhamp/gitamic) or directly in your Statamic installation's CP.
+
 Once Gitamic is installed you can use it immediately. It relies on wherever your site is running to contain a git
 repository.
 
