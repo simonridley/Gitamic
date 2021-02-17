@@ -2,7 +2,7 @@
 
 namespace SimonHamp\Gitamic\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use SimonHamp\Gitamic\Contracts\SiteRepository;
 
 class GitamicApiController
@@ -26,37 +26,8 @@ class GitamicApiController
 
     public function actions($type)
     {
-        switch ($type)
-        {
-            case 'unstaged':
-                return response()->json([
-                    [
-                        'title' => 'Stage',
-                        'handle' => 'stage',
-                        'buttonText' => 'Stage',
-                        'description' => 'Are you sure?',
-                        'fields' => ['path'],
-                    ],
-                    [
-                        'title' => 'Ignore',
-                        'handle' => 'ignore',
-                        'buttonText' => 'Add to .gitignore file',
-                        'description' => 'Are you sure?',
-                        'fields' => ['path'],
-                    ],
-                ]);
-
-            case 'staged':
-                return response()->json([
-                    [
-                        'title' => 'Unstage',
-                        'handle' => 'unstage',
-                        'buttonText' => 'Unstage',
-                        'description' => 'Are you sure?',
-                        'fields' => ['path'],
-                    ],
-                ]);
-        }
+        $method = Str::camel("get_{$type}_actions");
+        return response()->json($this->{$method}());
     }
 
     public function doAction(SiteRepository $git, $type)
@@ -78,5 +49,29 @@ class GitamicApiController
         $result = $git->commit(request()->input('commit_message'));
 
         return response()->json(['result' => $result]);
+    }
+
+    protected function getUnstagedActions()
+    {
+        return [
+            [
+                'title' => 'Stage',
+                'handle' => 'stage',
+                'buttonText' => 'Stage',
+                'fields' => ['path'],
+            ],
+        ];
+    }
+
+    protected function getStagedActions()
+    {
+        return [
+            [
+                'title' => 'Unstage',
+                'handle' => 'unstage',
+                'buttonText' => 'Unstage',
+                'fields' => ['path'],
+            ],
+        ];
     }
 }
