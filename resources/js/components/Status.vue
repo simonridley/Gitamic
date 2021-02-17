@@ -5,7 +5,8 @@
             title="Commit staged changes"
             buttonText="Commit"
             @confirm="doCommit"
-            @cancel="cancelCommit">
+            @cancel="cancelCommit"
+        >
             <p>Are you sure you want to commit these changes?</p>
             <ul class="m-2 list-inside">
                 <li v-for="file in staged" class="list-disc">{{ file.relative_path }}</li>
@@ -93,6 +94,7 @@
 
             cancelCommit() {
                 this.confirming = false;
+                this.commit_message = '';
             },
 
             async doCommit() {
