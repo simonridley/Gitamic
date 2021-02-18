@@ -2,6 +2,14 @@
 Gitamic adds an interactive git UI to Statamic so that you can have more control over your commits. It's great for more
 complex sites that rely on live-publishing changes from your Statamic CP back to your git repository.
 
+## Features
+- See changes to files (a.k.a. your 'working tree')
+- Stage and unstage changes
+- Commit changes
+- Push changes
+
+And even more features are coming as Gitamic is under active development!
+
 ## Installation and Setup
 ### Statamic CP
 Using the Statamic CP is the easiest way to install Gitamic. Under **Tools > Addons**, use the search to find 'Gitamic'
