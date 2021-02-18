@@ -1,6 +1,7 @@
 {
     "name": "simonhamp/gitamic",
     "description": "A beautiful Git interface inside Statamic",
+    "license": "proprietary",
     "type": "statamic-addon",
     "authors": [
         {
