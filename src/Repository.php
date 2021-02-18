@@ -79,13 +79,19 @@ class Repository implements Contracts\SiteRepository
         return $this->repo->run('commit', ['-m ' . addslashes($message)]);
     }
 
+    public function push()
+    {
+        return $this->repo->run('push');
+    }
+
     public function upToDate(): bool
     {
         $this->repo->run('fetch', ['--all']);
 
         $status = $this->repo->run('status');
 
-        return ! Str::contains($status, 'Your branch is behind');
+        return ! Str::contains($status, 'Your branch is behind')
+            && ! Str::contains($status, 'Your branch is ahead');
     }
 
     protected function getFileDetails($relative_path, $id): Collection

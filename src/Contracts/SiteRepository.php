@@ -24,5 +24,7 @@ interface SiteRepository
 
     public function commit($message);
 
+    public function push();
+
     public function upToDate(): bool;
 }

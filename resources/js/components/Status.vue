@@ -25,6 +25,13 @@
                 @click="confirmCommit">
                 <span>{{ __('Commit') }}</span>
             </button>
+
+            <button
+                v-if="! isUpToDate"
+                class="ml-2 btn-primary flex items-center"
+                @click="push">
+                <span>{{ __('Push') }}</span>
+            </button>
         </div>
 
         <div v-if="! loaded" class="card p-3 text-center">
@@ -110,6 +117,12 @@
                 await this.getStatus();
                 this.confirming = false;
                 this.commit_message = '';
+            },
+
+            async push() {
+                await this.$axios.post(cp_url(`gitamic/api/push`));
+
+                await this.getStatus();
             },
         }
     }
