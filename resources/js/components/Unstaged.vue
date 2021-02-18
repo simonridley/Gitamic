@@ -14,7 +14,7 @@
                                            key="git.stage"
                                            @click="stage(file)" />
                             <div class="divider"></div>
-                            <dropdown-item :text="__('Delete')" class="warning" />
+<!--                            <dropdown-item :text="__('Delete')" class="warning" />-->
 <!--                            /**@click="destroy(container, index)"**/-->
                         </dropdown-list>
                     </template>
