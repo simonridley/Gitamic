@@ -60,8 +60,4 @@ instead.
 Please note that I will not respond to feature requests or bug reports at this email address.
 
 ## License
-Gitamic is proprietary software. A single purchase entitles you to use Gitamic on one Statamic site.
-
-Unauthorized copying, distribution or sale of this package, in whole or part, via any medium is strictly prohibited
-
-Copyright © 2021 Simon Hamp - All Rights Reserved
+See [LICENSE](https://github.com/simonhamp/Gitamic/blob/main/LICENSE.md)
