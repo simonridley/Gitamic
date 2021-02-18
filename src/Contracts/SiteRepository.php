@@ -23,4 +23,6 @@ interface SiteRepository
     public function remove($files, $args = []);
 
     public function commit($message);
+
+    public function upToDate(): bool;
 }

@@ -20,7 +20,8 @@ class GitamicApiController
         return response()->json([
             'unstaged' => $unstaged->all(),
             'staged' => $staged->all(),
-            'meta' => $meta
+            'meta' => $meta,
+            'up_to_date' => $git->upToDate(),
         ]);
     }
 

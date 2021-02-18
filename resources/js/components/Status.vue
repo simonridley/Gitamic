@@ -60,12 +60,17 @@
                 staged: [],
                 meta: {},
                 commit_message: '',
+                up_to_date: true,
             }
         },
 
         computed: {
             hasStagedChanges() {
                 return this.staged.length > 0;
+            },
+
+            isUpToDate() {
+                return this.up_to_date;
             }
         },
 
@@ -86,6 +91,7 @@
                 this.unstaged = response.data.unstaged;
                 this.staged = response.data.staged;
                 this.meta = response.data.meta;
+                this.up_to_date = response.data.up_to_date;
             },
 
             confirmCommit() {
@@ -101,7 +107,7 @@
                 let response = await this.$axios.post(cp_url(`gitamic/api/commit`), {
                     commit_message: this.commit_message
                 });
-                this.getStatus();
+                await this.getStatus();
                 this.confirming = false;
                 this.commit_message = '';
             },
