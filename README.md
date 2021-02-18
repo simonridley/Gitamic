@@ -10,6 +10,9 @@ complex sites that rely on live-publishing changes from your Statamic CP back to
 
 And even more features are coming as Gitamic is under active development!
 
+**COMING SOON**
+- Pro version with even more powerful features!
+
 ## Installation and Setup
 ### Statamic CP
 Using the Statamic CP is the easiest way to install Gitamic. Under **Tools > Addons**, use the search to find 'Gitamic'
@@ -23,7 +26,7 @@ composer require simonhamp/gitamic
 ```
 
 Once Composer has finished downloading the necessary dependencies, you'll need to update your application's
-`config/statamic/editions.php` to indicate which version of Gitamic you wish to use (`basic` or `pro`):
+`config/statamic/editions.php` to indicate that you're using the `basic` edition of Gitamic:
 
 ```php
     'addons' => [
@@ -39,9 +42,11 @@ You can purchase a license from the [Statamic Marketplace](https://statamic.com/
 Once Gitamic is installed, you can use it immediately. It relies on wherever your site is running to contain a git
 repository.
 
+#### Statamic Pro
 Gitamic **does not** require Statamic Pro, nor [Statamic's Git integration](https://statamic.dev/git-integration) to be
 enabled. If however you do have Statamic's Git integration enabled, you may find it better to _disable_ its 'automatic
-commits' feature.
+commits' feature so that Statamic doesn't automatically commit every change, leaving you to do it via Gitamic, if that's
+what you're into.
 
 To do this you can set the following key in your `.env` file:
 
