@@ -41,7 +41,7 @@ To do this you can set the following key in your `.env` file:
 STATAMIC_GIT_AUTOMATIC=false
 ```
 
-## Bugs and Feature Request
+## Bugs and Feature Requests
 If you experience any problems with Gitamic or would like to make a feature request, please
 [raise an issue](https://github.com/simonhamp/Gitamic/issues) using the appropriate template.
 
@@ -56,4 +56,4 @@ Gitamic is proprietary software. A single purchase entitles you to use Gitamic o
 
 Unauthorized copying, distribution or sale of this package, in whole or part, via any medium is strictly prohibited
 
-Copyright (C) 2021 Simon Hamp - All Rights Reserved
+Copyright © 2021 Simon Hamp - All Rights Reserved
